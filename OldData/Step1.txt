@@ -1,0 +1,41 @@
+Includa le parole: museo abbaiare segreto
+Includa le parole: allievo cattedrale oscuro
+Abbia luogo in: un giardino
+Abbia luogo in: una cucina
+Includa un personaggio che: rivela un terribile segreto
+Includa un personaggio che: riceve un messaggio misterioso
+Includa le parole: hindi estate farabutto
+Inizi con questo dialogo: chi è lui/lei?
+Inizi con questo dialogo: Sai perché?
+Abbia luogo in: nella tua casa
+Includa le parole: allergia ornamento osso
+Inizi con questo dialogo: passami la mappa
+Abbia luogo in: in un aula
+Includa un personaggio che: è basato su un personaggio famoso di un film che hai visto
+Includa le parole: femmina sapone baffo
+Abbia luogo in: una discarica
+Inizi con questo dialogo: ridammi la borsa
+Includa le parole: libreria morto/a appassionato/a
+Inizi con questo dialogo: Non so chi sono
+Si svolge su: una collina
+Inizia una frase con: l'uccello non era nella gabbia
+Abbia luogo in: un castello
+Inizi con questo dialogo : Ti preoccupi troppo
+Inizia con questa frase: Trovò un vecchio giocattolo
+Includa un personaggio che: ha una memoria eidetica
+Abbia luogo in: un panificio
+Inizia una frase con: si imbatté nella cameriera della biblioteca
+Includa un personaggio che: sposa qualcuno che lei non ama
+Abbia luogo in: un’isola deserta
+Includa le parole: padre risorto artigiana
+C’è un personaggio che: inizia un viaggio
+Abbia luogo in: nella stanza degli ospiti
+Inizia con questa frase: non perse mai la speranza
+Inizia una frase con: hanno dato l’ordine
+Abbia luogo in: su di un’isola
+Inizia con questa frase: Irene era felice perché…
+Includa le parole: trampolo familiare città 
+Che accada: durante una conversazione
+Includa le parole: tappeto autore magia
+Che accada: in una grande città
+Includa le parole: coltello vampiro negozio
