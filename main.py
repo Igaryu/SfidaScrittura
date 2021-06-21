@@ -19,7 +19,7 @@ from sys import exit
 from random import randint 
 import sqlite3
 
-DEBUG = False
+DEBUG = True
 def cls():
 	'''
 		Definisce cosa usare per pulire lo schermo in base al sistema
@@ -60,32 +60,6 @@ def menu() -> int:
   
 
 
-if exists("Steps.sqlite3") is False:
-    cls()
-    print('\n\nDatabase definizinoi Steps.sqlite3 non presente: non posso proseguire.\n\n')
-    exit(-9)
-else:
-	data_base = sqlite3.connect("Steps.sqlite3")
-	cur=data_base.cursor()
-
-Lang = 'IT'
-
-intesta()
-print("Caricamento dati in corso...")
-for numero_record in data_base.execute(f"select * from Steps1 where Lingua='{Lang}';"):
-    pass
-
-TotRecStep1 = numero_record[0]
-if DEBUG:
-    input(f'Numero record presenti in Step1: {TotRecStep1}.')
-
-for numero_record in data_base.execute(f"select * from Steps2 where Lingua='{Lang}';"):
-    pass
-
-TotRecStep2 = numero_record[0]
-if DEBUG:
-    input(f'Numero record presenti in Step1: {TotRecStep2}.')
-
 def chiudi_db(cur: sqlite3.Cursor, data_base: sqlite3.Connection ) -> bool:
     '''
     1. Ripristina a 0 tutti campi GiaUsato sia nella tavola Steps1
@@ -99,6 +73,16 @@ def chiudi_db(cur: sqlite3.Cursor, data_base: sqlite3.Connection ) -> bool:
     data_base.close()
     return True
 
+def ResetGiaUsato(cur: sqlite3.Cursor, data_base: sqlite3.Connection ) -> bool:
+    '''
+    Operazione di reset campi GiaUsato trasformata in funzione
+    per poterla lanciare anche all'avvio del programma così da
+    resettare i campi anche all'avvio nel caso si sia usciti
+    per qualche motivo usanto CTRL-C
+    '''
+    cur.execute("update Steps1 set GiaUsato=0;")
+    cur.execute("update Steps2 set GiaUsato=0;")
+    data_base.commit()     
 
 def core(TotRecStep1: int, TotRecStep2: int) -> bool:
     '''
@@ -119,6 +103,9 @@ def core(TotRecStep1: int, TotRecStep2: int) -> bool:
     '''
     intesta()
     init(autoreset=True)
+
+    ResetGiaUsato(cur, data_base)
+
     print("Inizia un racconto che ...\n")
     tmpRand=randint(1,TotRecStep1)
     tmpGiaUsato = -1
@@ -208,8 +195,34 @@ def core(TotRecStep1: int, TotRecStep2: int) -> bool:
 
 
 ######################################
-# Fine aree funzioni
+# Fine area funzioni
 ######################################
+
+if exists("Steps.sqlite3") is False:
+    cls()
+    print('\n\nDatabase definizinoi Steps.sqlite3 non presente: non posso proseguire.\n\n')
+    exit(-9)
+
+data_base = sqlite3.connect("Steps.sqlite3")
+cur=data_base.cursor()
+ResetGiaUsato(cur, data_base)
+
+Lang = 'IT'
+intesta()
+print("Caricamento dati in corso...")
+for numero_record in data_base.execute(f"select * from Steps1 where Lingua='{Lang}';"):
+    pass
+
+TotRecStep1 = numero_record[0]
+if DEBUG:
+    input(f'Numero record presenti in Step1: {TotRecStep1}.')
+
+for numero_record in data_base.execute(f"select * from Steps2 where Lingua='{Lang}';"):
+    pass
+
+TotRecStep2 = numero_record[0]
+if DEBUG:
+    input(f'Numero record presenti in Step1: {TotRecStep2}.')
 
 intesta()
 risp=0
