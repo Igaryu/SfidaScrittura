@@ -19,7 +19,7 @@ from sys import exit
 from random import randint 
 import sqlite3
 
-DEBUG = True
+DEBUG = False
 def cls():
 	'''
 		Definisce cosa usare per pulire lo schermo in base al sistema
