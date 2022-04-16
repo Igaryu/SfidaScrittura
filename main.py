@@ -21,6 +21,8 @@ import sqlite3
 
 #DEBUG = True
 DEBUG = False
+SOFT = True
+
 def cls():
 	'''
 		Definisce cosa usare per pulire lo schermo in base al sistema
@@ -46,14 +48,15 @@ def menu() -> int:
     '''
     
     risp=0
-    while ((risp < 1) or (risp > 3)):
+    while ((risp < 1) or (risp > 4)):
         intesta()
         print("\n\n\n\n\n")
-        print("\t\t\t[ 1 ] Avvia storia\n\n")
-        print("\t\t\t[ 2 ] Impostazioni\n\n")
-        print("\t\t\t[ 3 ] Esci\n\n")
-        risp=input('\n\n Seleziona voce menu [ 1 - 3 ] ')
-        if risp in "123":
+        print("\t\t\t[ 1 ] Avvia storia in versione soft\n\n")
+        print("\t\t\t[ 2 ] Avvia storia in versione hard\n\n")
+        print("\t\t\t[ 3 ] Impostazioni\n\n")
+        print("\t\t\t[ 4 ] Esci\n\n")
+        risp=input('\n\n Seleziona voce menu [ 1 - 4 ] ')
+        if risp in "1234":
             risp=int(risp)
         else:
             risp=0
@@ -85,7 +88,7 @@ def ResetGiaUsato(cur: sqlite3.Cursor, data_base: sqlite3.Connection ) -> bool:
     cur.execute("update Steps2 set GiaUsato=0;")
     data_base.commit()     
 
-def core(TotRecStep1: int, TotRecStep2: int) -> bool:
+def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
     '''
     Funzione  master del programma:
     setta l'auto resete del'init di colorama
@@ -108,10 +111,19 @@ def core(TotRecStep1: int, TotRecStep2: int) -> bool:
     ResetGiaUsato(cur, data_base)
 
     print("Inizia un racconto che ...\n")
-    tmpRand=randint(1,TotRecStep1)
+    if Soft:
+ #       tmpRand=randint(1,TotRecStep1)
+        tmpRand=randint(1,51)
+    else:
+        tmpRand=randint(52,101) 
+           
     tmpGiaUsato = -1
     while tmpGiaUsato != 0:
-        cur.execute(f"select Frase,GiaUsato from Steps1 where Lingua='{Lang}' and indStep={tmpRand};")
+        if Soft:
+            cur.execute(f"select Frase,GiaUsato from Steps1 where Lingua='{Lang}' and indStep={tmpRand} and Hard=0;")
+        else:
+            cur.execute(f"select Frase,GiaUsato from Steps1 where Lingua='{Lang}' and indStep={tmpRand} and Hard=1;")        
+        
         riga=cur.fetchone()
         tmpGiaUsato = riga[1]
         tmpRand1 = tmpRand
@@ -121,17 +133,29 @@ def core(TotRecStep1: int, TotRecStep2: int) -> bool:
     while locRisp != 'a' and locRisp != 'c' and locRisp != 'u':
         locRisp=input("\n\t\t[ A ]ccetti o [ C ]cambi o vuoi [ U ]scire? [A/C/U]: ").lower()
         if locRisp == 'c':
-            tmpRand=randint(1,TotRecStep1)
+            if Soft:
+                tmpRand=randint(1,51)
+            else:
+                tmpRand=randint(52,101) 
+                
             tmpGiaUsato = -1
             while tmpGiaUsato != 0:
-                cur.execute(f"select Frase,GiaUsato from Steps1 where Lingua='{Lang}' and indStep={tmpRand};")
+                if Soft:
+                    cur.execute(f"select Frase,GiaUsato from Steps1 where Lingua='{Lang}' and indStep={tmpRand} and Hard=0;")
+                else:
+                    cur.execute(f"select Frase,GiaUsato from Steps1 where Lingua='{Lang}' and indStep={tmpRand} and Hard=1;")
+                    
                 riga=cur.fetchone()
                 if DEBUG:
                 	print(f'{Fore.RED} Riga estratta: {riga}')
                 tmpGiaUsato=riga[1]
                 tmpRand1 = tmpRand
                 while tmpRand == tmpRand1:
-                    tmpRand=randint(1,TotRecStep1)
+                    if Soft:
+                        tmpRand=randint(1,51)
+                    else:
+                        tmpRand=randint(52,101) 
+                    
             print(f"\n{Fore.BLACK} {Back.WHITE}{riga[0]}")
             cur.execute(f"update Steps1 set GiaUsato=1 where indStep={tmpRand1}")
             data_base.commit()
@@ -141,12 +165,20 @@ def core(TotRecStep1: int, TotRecStep2: int) -> bool:
             exit(0)
     
     
-    tmpRand=randint(1,TotRecStep2)
+ #tmpRand=randint(1,TotRecStep2)
+    if Soft:
+        tmpRand=randint(1,100)
+    else:
+        tmpRand=randint(101,200) 
+        
     cls()
     print("\ne continua il raccontoto seguendo le indicazioni che seguono...\n")
     tmpGiaUsato = -1
     while tmpGiaUsato != 0:
-        cur.execute(f"select Frase,GiaUsato from Steps2 where Lingua='{Lang}' and indStep={tmpRand};")
+        if Soft :
+            cur.execute(f"select Frase,GiaUsato from Steps2 where Lingua='{Lang}' and indStep={tmpRand};")
+        else:
+            cur.execute(f"select Frase,GiaUsato from Steps2 where Lingua='{Lang}' and indStep={tmpRand};")
         riga=cur.fetchone()
         tmpGiaUsato = riga[1]
         tmpRand1 = tmpRand
@@ -159,14 +191,28 @@ def core(TotRecStep1: int, TotRecStep2: int) -> bool:
             cur.execute(f"update Steps2 set GiaUsato=1 where indStep={tmpRand}")
             data_base.commit()
 
-            tmpRand=randint(1,TotRecStep2)
+ #           tmpRand=randint(1,TotRecStep2)
+            if Soft:
+                tmpRand=randint(1,100)
+            else:
+                tmpRand=randint(101,200) 
+            
             tmpRand1 = tmpRand
             while tmpRand == tmpRand1:
-                tmpRand=randint(1,TotRecStep2)
-            
+#                tmpRand=randint(1,TotRecStep2)
+                if Soft:
+                    tmpRand=randint(1,100)
+                else:
+                    tmpRand=randint(101,200) 
+            if DEBUG:
+                print(f" {Fore.RED}Valore pre errore linea 216 per tmpRand: {tmpRand}")
             tmpGiaUsato = -1
             while tmpGiaUsato != 0:
-                cur.execute(f"select Frase,GiaUsato from Steps2 where Lingua='{Lang}' and indStep={tmpRand};")
+                if Soft :
+                    cur.execute(f"select Frase,GiaUsato from Steps2 where Lingua='{Lang}' and indStep={tmpRand};")
+                else:
+                    cur.execute(f"select Frase,GiaUsato from Steps2 where Lingua='{Lang}' and indStep={tmpRand};")
+            
                 riga=cur.fetchone()
 
                 tmpGiaUsato = riga[1]
@@ -179,7 +225,11 @@ def core(TotRecStep1: int, TotRecStep2: int) -> bool:
  
                 tmpRand1 = tmpRand
                 while tmpRand == tmpRand1:
-	                tmpRand=randint(1,TotRecStep2)
+                    if Soft:
+                        tmpRand=randint(1,100)
+                    else:
+                        tmpRand=randint(101,200) 
+#tmpRand=randint(1,TotRecStep2)
                 
             print(f"\n{Fore.BLUE} {Back.WHITE}{riga[0]}")
             cur.execute(f"update Steps2 set GiaUsato=1 where indStep={tmpRand}")
@@ -227,16 +277,23 @@ if DEBUG:
 
 intesta()
 risp=0
-while(risp != 3):
-	risp=menu()
-	if (risp == 1):
-		core(TotRecStep1, TotRecStep2)
-	if (risp == 2):
-		pass
-	if (risp == 3):
-		print("\n\nFine sessione.")
-		if chiudi_db(cur, data_base):exit(0)
-		else:exit(-9)
+while(risp != 4):
+    risp=menu()
+    if (risp == 1) :
+        Soft = True
+        core(TotRecStep1, TotRecStep2, Soft)
+    if (risp == 2):
+        Soft = False
+        core(TotRecStep1, TotRecStep2, Soft)
+    if (risp == 3):
+        pass
+    if (risp == 4):
+     print("\n\nFine sessione.")
+
+if chiudi_db(cur, data_base):
+     exit(0)
+else:
+     exit(-9)
 
 
 '''
