@@ -110,7 +110,7 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
 
     ResetGiaUsato(cur, data_base)
 
-    print("Inizia un racconto che ...\n")
+    print("Inizia un racconto che...\n")
     if Soft:
  #       tmpRand=randint(1,TotRecStep1)
         tmpRand=randint(1,51)
@@ -128,10 +128,10 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
         tmpGiaUsato = riga[1]
         tmpRand1 = tmpRand
              
-    print(f"\n{Fore.BLACK} {Back.WHITE}{riga[0]}")
+    print(f"\n{Fore.RED} {riga[0]}")
     locRisp=""
-    while locRisp != 'a' and locRisp != 'c' and locRisp != 'u':
-        locRisp=input("\n\t\t[ A ]ccetti o [ C ]cambi o vuoi [ U ]scire? [A/C/U]: ").lower()
+    while locRisp != 'a' and locRisp != 'c' and locRisp != 'u' and locRisp != 'e':
+        locRisp=input("\n\t\t[ A ]ccetti o [ C ]cambi o vuoi [ E ]sci? [A/C/E]: ").lower()
         if locRisp == 'c':
             if Soft:
                 tmpRand=randint(1,51)
@@ -156,11 +156,11 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
                     else:
                         tmpRand=randint(52,101) 
                     
-            print(f"\n{Fore.BLACK} {Back.WHITE}{riga[0]}")
+            print(f"\n{Fore.RED} {riga[0]}")
             cur.execute(f"update Steps1 set GiaUsato=1 where indStep={tmpRand1}")
             data_base.commit()
             locRisp=''
-        elif locRisp == 'u':
+        elif locRisp == 'e':
             chiudi_db(cur, data_base)
             exit(0)
     
@@ -183,10 +183,10 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
         tmpGiaUsato = riga[1]
         tmpRand1 = tmpRand
             
-    print(f"\n{Fore.BLACK} {Back.WHITE}{riga[0]}")
+    print(f"\n{Fore.RED} {riga[0]}")
     locRisp=""
-    while locRisp != 'a' and locRisp != 'c' and locRisp != 'u':
-        locRisp=input("\n\t\t[ A ]ccetti o [ C ]cambi o vuoi [ U ]scire? [A/C/U]: ").lower()
+    while locRisp != 'a' and locRisp != 'c' and locRisp != 'e':
+        locRisp=input("\n\t\t[ A ]ccetti o [ C ]cambi o [ E ]sci [A/C/E]: ").lower()
         if locRisp == 'c' or locRisp == 'a':
             cur.execute(f"update Steps2 set GiaUsato=1 where indStep={tmpRand}")
             data_base.commit()
@@ -231,11 +231,11 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
                         tmpRand=randint(101,200) 
 #tmpRand=randint(1,TotRecStep2)
                 
-            print(f"\n{Fore.BLUE} {Back.WHITE}{riga[0]}")
+            print(f"\n{Fore.RED} {riga[0]}")
             cur.execute(f"update Steps2 set GiaUsato=1 where indStep={tmpRand}")
             data_base.commit()
             locRisp=''
-        elif locRisp == 'u':
+        elif locRisp == 'e':
             chiudi_db(cur,data_base)
             exit(0)
     
