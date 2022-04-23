@@ -128,7 +128,7 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
         tmpGiaUsato = riga[1]
         tmpRand1 = tmpRand
              
-    print(f"\n{Fore.RED} {riga[0]}")
+    print(f"\n{Fore.GREEN} {riga[0]}")
     locRisp=""
     while locRisp != 'a' and locRisp != 'c' and locRisp != 'u' and locRisp != 'e':
         locRisp=input("\n\t\t[ A ]ccetti o [ C ]cambi o vuoi [ E ]sci? [A/C/E]: ").lower()
@@ -147,8 +147,8 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
                     
                 riga=cur.fetchone()
                 if DEBUG:
-                	print(f'{Fore.RED} Riga estratta: {riga}')
-                tmpGiaUsato=riga[1]
+                	print(f'{Fore.GREEN} Riga estratta: {riga}')
+                tmpGiaUsato = riga[1]
                 tmpRand1 = tmpRand
                 while tmpRand == tmpRand1:
                     if Soft:
@@ -156,7 +156,7 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
                     else:
                         tmpRand=randint(52,101) 
                     
-            print(f"\n{Fore.RED} {riga[0]}")
+            print(f"\n{Fore.GREEN} {riga[0]}")
             cur.execute(f"update Steps1 set GiaUsato=1 where indStep={tmpRand1}")
             data_base.commit()
             locRisp=''
@@ -172,7 +172,7 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
         tmpRand=randint(101,200) 
         
     cls()
-    print("\ne continua il raccontoto seguendo le indicazioni che seguono...\n")
+    print("\ne continua il racconto seguendo le indicazioni che seguono...\n")
     tmpGiaUsato = -1
     while tmpGiaUsato != 0:
         if Soft :
@@ -183,7 +183,7 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
         tmpGiaUsato = riga[1]
         tmpRand1 = tmpRand
             
-    print(f"\n{Fore.RED} {riga[0]}")
+    print(f"\n{Fore.GREEN} {riga[0]}")
     locRisp=""
     while locRisp != 'a' and locRisp != 'c' and locRisp != 'e':
         locRisp=input("\n\t\t[ A ]ccetti o [ C ]cambi o [ E ]sci [A/C/E]: ").lower()
@@ -191,7 +191,7 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
             cur.execute(f"update Steps2 set GiaUsato=1 where indStep={tmpRand}")
             data_base.commit()
 
- #           tmpRand=randint(1,TotRecStep2)
+
             if Soft:
                 tmpRand=randint(1,100)
             else:
@@ -199,13 +199,12 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
             
             tmpRand1 = tmpRand
             while tmpRand == tmpRand1:
-#                tmpRand=randint(1,TotRecStep2)
                 if Soft:
                     tmpRand=randint(1,100)
                 else:
                     tmpRand=randint(101,200) 
             if DEBUG:
-                print(f" {Fore.RED}Valore pre errore linea 216 per tmpRand: {tmpRand}")
+                print(f" {Fore.GREEN}Valore pre errore linea 216 per tmpRand: {tmpRand}")
             tmpGiaUsato = -1
             while tmpGiaUsato != 0:
                 if Soft :
@@ -220,7 +219,7 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
                 cur.execute(f"update Steps2 set GiaUsato=1 where indStep={tmpRand}")
                 data_base.commit()
                 if DEBUG:
-                    print(f'{Fore.RED} Riga estratta: {riga}')
+                    print(f'{Fore.GREEN} Riga estratta: {riga}')
                 
  
                 tmpRand1 = tmpRand
@@ -229,12 +228,11 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
                         tmpRand=randint(1,100)
                     else:
                         tmpRand=randint(101,200) 
-#tmpRand=randint(1,TotRecStep2)
                 
-            print(f"\n{Fore.RED} {riga[0]}")
+            print(f"\n{Fore.GREEN} {riga[0]}")
             cur.execute(f"update Steps2 set GiaUsato=1 where indStep={tmpRand}")
             data_base.commit()
-            locRisp=''
+            locRisp = ''
         elif locRisp == 'e':
             chiudi_db(cur,data_base)
             exit(0)
