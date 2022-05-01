@@ -147,7 +147,7 @@ def core(TotRecStep1: int, TotRecStep2: int, Soft: bool) -> bool:
                     
                 riga=cur.fetchone()
                 if DEBUG:
-                	print(f'{Fore.GREEN} Riga estratta: {riga}')
+                    print(f'{Fore.GREEN} Riga estratta: {riga}')
                 tmpGiaUsato = riga[1]
                 tmpRand1 = tmpRand
                 while tmpRand == tmpRand1:
