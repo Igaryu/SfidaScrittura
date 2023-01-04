@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.10
 '''
    Prima fase: inport delle varie funzioni dai vari moduli
    a seguire verificare se esiste il file database e:
