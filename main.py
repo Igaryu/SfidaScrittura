@@ -80,9 +80,10 @@ def chiudi_db(cur: sqlite3.Cursor, data_base: sqlite3.Connection ) -> bool:
     2. commita.
     3. chiudi correttamente il database.
     '''
-    cur.execute("update Steps1 set GiaUsato=0;")
-    cur.execute("update Steps2 set GiaUsato=0;")
-    data_base.commit() 
+    ResetGiaUsato(cur, data_base)
+#    cur.execute("update Steps1 set GiaUsato=0;")
+#    cur.execute("update Steps2 set GiaUsato=0;")
+#    data_base.commit() 
     data_base.close()
     return True
 
